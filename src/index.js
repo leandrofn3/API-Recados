@@ -20,9 +20,10 @@ app.get("/", (req, res) => {
 });
 
 let users = [];
+
 //signup
 
-app.post("/signup", signupMiddlaware, (req, res) => {
+app.post("/signup", signupMiddleware, (req, res) => {
 	try {
 		const user = req.body;
 		const saltRounds = 10;
@@ -48,10 +49,10 @@ app.post("/signup", signupMiddlaware, (req, res) => {
 			ok: true,
 			massage: "Conta Criada com sucesso"
 		});
-	} catch (err) {
+	} catch (error) {
 		return res.status(500).json({
 			ok: false,
-			data: err
+			data: error
 		});
 	}
 });
@@ -67,7 +68,7 @@ app.get("/signup", (req, res) => {
 	}
 });
 
-function signupMiddlaware(req, res, next) {
+function signupMiddleware(req, res, next) {
 	const someEmail = users.some((emailSome) => {
 		return emailSome.email === req.body.email;
 	});
@@ -104,7 +105,7 @@ app.post("/login", async (req, res) => {
 });
 
 function createValidate(req, res, next) {
-	if(!req.params.id) return res.status(422).json({ok: false, message: "O id e obrigatório passar por parametro!"})
+	if (!req.params.id) return res.status(422).json({ ok: false, message: "O id e obrigatório passar por parametro!" });
 	if (!req.body.title) return res.status(422).json({ ok: false, message: "O titulo e obrigatório!" });
 	if (!req.body.description) return res.status(422).json({ ok: false, message: "A descrição e obrigatória!" });
 
